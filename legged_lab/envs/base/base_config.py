@@ -52,7 +52,7 @@ class BaseSceneCfg:
 class RobotCfg:
     actor_obs_history_length: int = 10
     critic_obs_history_length: int = 10
-    action_scale: float = 0.25
+    action_scale: float = 0.4
     terminate_contacts_body_names: list = []
     feet_body_names: list = []
 

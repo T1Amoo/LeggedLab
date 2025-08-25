@@ -22,6 +22,26 @@ inherit from ``isaaclab.terrains.terrains_cfg.TerrainConfig`` and define the fol
 import isaaclab.terrains as terrain_gen
 from isaaclab.terrains.terrain_generator_cfg import TerrainGeneratorCfg
 
+PLANE_TERRAIN_CFG = TerrainGeneratorCfg(
+    curriculum=False,
+    size=(8.0, 8.0),
+    border_width=20.0,
+    num_rows=10,
+    num_cols=20,
+    horizontal_scale=0.1,
+    vertical_scale=0.005,
+    slope_threshold=0.75,
+    use_cache=False,
+    sub_terrains={
+        "random_rough": terrain_gen.HfRandomUniformTerrainCfg(
+            proportion=1.0,
+            noise_range=(0.0, 0.0),     # ✅ 无噪声 = 平面
+            noise_step=0.02,            # 不影响平面结果
+            border_width=0.25,
+        )
+    },
+)
+
 GRAVEL_TERRAINS_CFG = TerrainGeneratorCfg(
     curriculum=False,
     size=(8.0, 8.0),

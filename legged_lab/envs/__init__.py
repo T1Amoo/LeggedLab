@@ -17,6 +17,10 @@ from legged_lab.envs.g1.g1_config import (
     G1FlatEnvCfg,
     G1RoughAgentCfg,
     G1RoughEnvCfg,
+    G1ImitationEnvCfg,
+    G1ImitationAgentCfg,
+    G1JumpEnvCfg,
+    G1JumpAgentCfg
 )
 from legged_lab.envs.gr2.gr2_config import (
     GR2FlatAgentCfg,
@@ -38,3 +42,5 @@ task_registry.register("g1_flat", BaseEnv, G1FlatEnvCfg(), G1FlatAgentCfg())
 task_registry.register("g1_rough", BaseEnv, G1RoughEnvCfg(), G1RoughAgentCfg())
 task_registry.register("gr2_flat", BaseEnv, GR2FlatEnvCfg(), GR2FlatAgentCfg())
 task_registry.register("gr2_rough", BaseEnv, GR2RoughEnvCfg(), GR2RoughAgentCfg())
+task_registry.register("g1_imitation", BaseEnv, G1ImitationEnvCfg(), G1ImitationAgentCfg())
+task_registry.register("g1_jump", BaseEnv, G1JumpEnvCfg(), G1JumpAgentCfg())

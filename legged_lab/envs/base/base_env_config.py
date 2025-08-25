@@ -67,7 +67,7 @@ class BaseEnvCfg:
     robot: RobotCfg = RobotCfg(
         actor_obs_history_length=10,
         critic_obs_history_length=10,
-        action_scale=0.25,
+        action_scale=0.4,
         terminate_contacts_body_names=MISSING,
         feet_body_names=MISSING,
     )
@@ -172,7 +172,7 @@ class BaseEnvCfg:
 class BaseAgentCfg(RslRlOnPolicyRunnerCfg):
     seed = 42
     device = "cuda:0"
-    num_steps_per_env = 24
+    num_steps_per_env = 48
     max_iterations = 50000
     empirical_normalization = False
     policy = RslRlPpoActorCriticCfg(
@@ -191,7 +191,7 @@ class BaseAgentCfg(RslRlOnPolicyRunnerCfg):
         entropy_coef=0.005,
         num_learning_epochs=5,
         num_mini_batches=4,
-        learning_rate=1.0e-3,
+        learning_rate=5.0e-4,
         schedule="adaptive",
         gamma=0.99,
         lam=0.95,

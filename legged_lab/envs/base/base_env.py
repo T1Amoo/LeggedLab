@@ -81,7 +81,9 @@ class BaseEnv(VecEnv):
         self.event_manager = EventManager(self.cfg.domain_rand.events, self)
         if "startup" in self.event_manager.available_modes:
             self.event_manager.apply(mode="startup")
+            
         self.reset(env_ids)
+        
 
     def init_buffers(self):
         self.extras = {}
@@ -177,6 +179,11 @@ class BaseEnv(VecEnv):
                 height_scan += (2 * torch.rand_like(height_scan) - 1) * self.height_scan_noise_vec
             actor_obs = torch.cat([actor_obs, height_scan], dim=-1)
 
+        # print("actor_obs per step:", current_actor_obs.shape[1])
+        # print("actor_obs total:", actor_obs.shape[1])
+        if self.cfg.scene.height_scanner.enable_height_scan:
+            print("height_scan shape:", height_scan.shape)
+
         actor_obs = torch.clip(actor_obs, -self.clip_obs, self.clip_obs)
         critic_obs = torch.clip(critic_obs, -self.clip_obs, self.clip_obs)
 
@@ -204,7 +211,8 @@ class BaseEnv(VecEnv):
         reward_extras = self.reward_manager.reset(env_ids)
         self.extras["log"].update(reward_extras)
         self.extras["time_outs"] = self.time_out_buf
-
+        self.extras["max_min_body_height"] = getattr(self, "_max_min_body_height", 0.0)
+        
         self.command_generator.reset(env_ids)
         self.actor_obs_buffer.reset(env_ids)
         self.critic_obs_buffer.reset(env_ids)
@@ -237,6 +245,8 @@ class BaseEnv(VecEnv):
             self.event_manager.apply(mode="interval", dt=self.step_dt)
 
         self.reset_buf, self.time_out_buf = self.check_reset()
+        import legged_lab.mdp as mdp
+        mdp.update_min_body_height(self)
         reward_buf = self.reward_manager.compute(self.step_dt)
         env_ids = self.reset_buf.nonzero(as_tuple=False).flatten()
         self.reset(env_ids)
