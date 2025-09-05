@@ -1,4 +1,4 @@
-from legged_lab.envs.base.base_env import  BaseEnv
+from legged_lab.envs.base.base_env import BaseEnv
 from legged_lab.envs.base.imitation_env_config import ImitationEnvCfg
 from legged_lab.envs.base.base_env_config import BaseEnvCfg
 

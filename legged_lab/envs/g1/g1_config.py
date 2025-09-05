@@ -194,14 +194,14 @@ class G1FlatEnvCfg(BaseEnvCfg):
 
         # === 能量/平滑正则 ===
         self.reward.energy.weight = -5e-4                # 起步强度，稳态可逐步 -8e-4 ~ -1.2e-3
-        self.reward.action_rate_l2.weight = -0.006       # 高速先弱一点，防止限制回摆
+        self.reward.action_rate_l2.weight = -0.004       # 高速先弱一点，防止限制回摆
         self.reward.dof_acc_l2.weight = -2e-6            # 稍加强，抑制猛加速引发过流
 
         # === 姿态与垂直扰动 ===
-        self.reward.lin_vel_z_l2.weight = -0.01          # 垂直速度偏小，跑步更灵活
+        self.reward.lin_vel_z_l2.weight = -0.005          # 垂直速度偏小，跑步更灵活
         self.reward.ang_vel_xy_l2.weight = -0.15
-        self.reward.body_orientation_l2.weight = -0.8
-        self.reward.flat_orientation_l2.weight = -0.3
+        self.reward.body_orientation_l2.weight = -0.5
+        self.reward.flat_orientation_l2.weight = -0.2
 
         # === 空中相 vs. 飞行：避免奖励“全离地” ===
         self.reward.feet_air_time.weight = 0.5
@@ -210,7 +210,7 @@ class G1FlatEnvCfg(BaseEnvCfg):
         self.reward.fly.params["threshold"] = 40.0
         # === 接触/碰撞 ===
         # 1 N 阈值太低，容易把轻微触碰算“undesired”
-        self.reward.undesired_contacts.params["threshold"] = 50.0
+        self.reward.undesired_contacts.params["threshold"] = 200.0
         self.reward.feet_too_near.weight = -1.0
         self.reward.termination_penalty.weight = -100.0
 
@@ -218,9 +218,6 @@ class G1FlatEnvCfg(BaseEnvCfg):
         self.robot.actor_obs_history_length = 1
         self.robot.critic_obs_history_length = 1
         
-
-
-
 
 @configclass
 class G1FlatAgentCfg(BaseAgentCfg):
@@ -358,7 +355,6 @@ class G1JumpEnvCfg(BaseEnvCfg):
         self.commands.ranges.lin_vel_x = (0.0, 0.0)
         self.commands.ranges.lin_vel_y = (0.0, 0.0)
         self.commands.ranges.heading = (0.0, 0.0)
-        
         
        
 @configclass

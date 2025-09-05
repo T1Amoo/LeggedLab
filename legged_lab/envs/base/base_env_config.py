@@ -48,7 +48,7 @@ from .base_config import (
 class BaseEnvCfg:
     device: str = "cuda:0"
     scene: BaseSceneCfg = BaseSceneCfg(
-        max_episode_length_s=20.0,
+        max_episode_length_s=100.0,
         num_envs=4096,
         env_spacing=2.5,
         robot=MISSING,
@@ -173,7 +173,7 @@ class BaseAgentCfg(RslRlOnPolicyRunnerCfg):
     seed = 42
     device = "cuda:0"
     num_steps_per_env = 48
-    max_iterations = 50000
+    max_iterations = 200000
     empirical_normalization = False
     policy = RslRlPpoActorCriticCfg(
         class_name="ActorCritic",
@@ -191,7 +191,7 @@ class BaseAgentCfg(RslRlOnPolicyRunnerCfg):
         entropy_coef=0.005,
         num_learning_epochs=5,
         num_mini_batches=4,
-        learning_rate=5.0e-4,
+        learning_rate=1.0e-4,
         schedule="adaptive",
         gamma=0.99,
         lam=0.95,
