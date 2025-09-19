@@ -45,6 +45,16 @@ git clone git@github.com:Hellod035/LeggedLab.git
 
 - Using a python interpreter that has Isaac Lab installed, install the library
 
+install isaacsim=4.5.0.0
+```bash
+pip install "isaacsim[all,extscache]==4.5.0.0" --extra-index-url https://pypi.nvidia.com
+```
+
+git branch to tags v2.1.1
+```bash
+./isaaclab.sh --install
+```
+
 ```bash
 cd LeggedLab
 pip install -e .
@@ -56,6 +66,10 @@ pip install -e .
 python legged_lab/scripts/train.py --task=g1_flat --headless --logger=tensorboard --num_envs=64
 ```
 
+or continue train from last round
+```bash
+python legged_lab/scripts/train.py --task=g1_flat --headless --logger=tensorboard --resume=true
+```
 
 ## Use Your Own Robot
 

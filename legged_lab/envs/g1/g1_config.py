@@ -182,13 +182,13 @@ class G1FlatEnvCfg(BaseEnvCfg):
         self.commands.ranges.lin_vel_y = (-0.7, 0.7)
         self.commands.ranges.ang_vel_z = (-1.57, 1.57)
         self.commands.ranges.heading = (-math.pi, math.pi)
-        self.commands.resampling_time_range = (3.0, 6.0) # 更频繁换指令以学过渡
+        self.commands.resampling_time_range = (3.0, 5.0) # 更频繁换指令以学过渡
         self.commands.heading_control_stiffness = 0.8
 
         # === 速度跟踪宽容度（高速度更宽）===
         # 简单做法：直接放宽 std；若做自适应，可在 mdp 里按 |cmd| 动态放大
-        self.reward.track_lin_vel_xy_exp.params["std"] = 1.2
-        self.reward.track_ang_vel_z_exp.params["std"] = 1.2
+        self.reward.track_lin_vel_xy_exp.params["std"] = 1.5
+        self.reward.track_ang_vel_z_exp.params["std"] = 1.5
         self.reward.track_lin_vel_xy_exp.weight = 3.0
         self.reward.track_ang_vel_z_exp.weight = 3.0
 
@@ -204,7 +204,7 @@ class G1FlatEnvCfg(BaseEnvCfg):
         self.reward.flat_orientation_l2.weight = -0.2
 
         # === 空中相 vs. 飞行：避免奖励“全离地” ===
-        self.reward.feet_air_time.weight = 0.5
+        self.reward.feet_air_time.weight = 0.25
         # 空中相上限可根据速度稍降到 0.20–0.25，更贴近高速步频；如需：self.reward.feet_air_time.params["threshold"] = 0.22
         self.reward.fly.weight = 0.02                    # 不奖励全脚腾空；或设为小负值以抑制“蹦跳”
         self.reward.fly.params["threshold"] = 40.0
